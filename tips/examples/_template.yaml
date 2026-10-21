@@ -1,0 +1,18 @@
+id: tip-example-template
+title: "Example tip (replace me)"
+title_zh: "示範技巧（請替換）"
+category: interchange  # interchange | shortcut_walk | mode_choice | tourist_default | fare_hint | rmb_habit | estate_shuttle | other
+audience: [both]       # tourist | local | both
+summary: "What to do in one or two sentences. Not a live schedule."
+summary_zh: "一兩句說明做法；唔係實時班次。"
+community: true
+source: "https://example.com/replace-with-real-source"
+as_of: "2026-10-21"
+expires: null
+applies_to:
+  from: ""
+  to: ""
+  modes: []
+  stations: []
+risk: low              # low | medium | high
+disclaimer: "Community tip AS IS; may be outdated. Not official ETA."
