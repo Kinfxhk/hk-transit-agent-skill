@@ -1,322 +1,289 @@
-# Community local tips (V0.1 / V1-B). NOT official ETA.
-# QA: every tip MUST have source + as_of + community + title + disclaimer + risk.
-# duration_policy_global: official_eta_or_gtfs_only — tips never embed minutes.
-# V0.1 deferred (weak source per QA): tip-estate-shuttle-template, tip-motion-comfort
-#   → estate stays under templates; motion → references/motion-comfort-heuristics.yaml
+# Canonical community tips — replaced from 開源研究 local-tips.schema-mapped.yaml (2026-10-21).
+# QA: source / as_of / community / title / disclaimer / risk required. Tips ≠ ETA minutes.
+
+# hk-transit-agent-skill · local-tips sample (V0.1 SCHEMA-aligned)
+# Maps tips/SCHEMA.md required fields. duration_policy kept as research hard-rule annotation.
+# as_of: 2026-10-21 · patched after QA WARN (category / title / disclaimer / risk / weak sources)
 
 schema_version: "0.1"
 layer: community
 unofficial: true
 duration_policy_global: official_eta_or_gtfs_only
-hard_rules:
-  - never_embed_eta_minutes_in_tips
-  - verify_routes_with_official_eta_or_gtfs
-  - no_citymapper_google_scrape
-  - no_gpl_hk_bus_eta
-  - no_invented_red_van_schedules
-default_disclaimer: >
-  Community tip AS IS; not an official schedule or ETA.
-  Verify on site / HKeMobility. Do not use tip text as journey duration.
-deferred_v01:
-  - id: tip-estate-shuttle-template
-    reason: "source was DATA.GOV T&C only — too weak; use templates until estate notice URL"
-  - id: tip-motion-comfort
-    reason: "source was DATA.GOV T&C only — use references/motion-comfort-heuristics.yaml instead"
 
 tips:
   - id: tip-mode-ael-vs-airport-bus
-    title: "Airport Express vs airport bus"
-    title_zh: "機場快線 vs 機場巴士"
+    title: "Airport Express vs airport bus — compare both"
+    title_zh: "機場快線 vs 機場巴——兩邊都要比"
     category: mode_choice
-    audience: [tourist]
+    audience: [tourist, both]
+    summary: "For airport↔city, consider both Airport Express and airport buses. Never assume one is always faster; Skill must pull both official ETA/timetables and label sources."
+    summary_zh: "機場往返市區：同時考慮機場快線同機場巴士。唔好預設邊種一定快；Skill 必須兩邊拉官方 ETA／時間表再比，並標來源。"
     community: true
     unofficial: true
-    as_of: "2026-10-21"
     source: "https://www.mtr.com.hk/en/customer/services/airport_express_index.html"
-    source_type: official
+    as_of: "2026-10-21"
+    expires: null
+    route_check:
+      status: unverified
+      official_route_ids: []
+      official_stop_ids: []
+      note: "No single official AEL-vs-bus speed comparison page found; verify each candidate with Next Train + KMB/LWB/Citybus ETA or GTFS."
+    risk: low
+    disclaimer: "Community preference tip AS IS. Not official journey time. Durations from official ETA/GTFS only."
     related_sources:
       - "https://data.gov.hk/en-data/dataset/mtr-data2-nexttrain-data"
       - "https://data.gov.hk/en-data/dataset/hk-td-tis_21-etakmb"
       - "https://data.gov.hk/en-data/dataset/ctb-eta-transport-realtime-eta"
-    summary: "Airport to city: consider both Airport Express and airport buses. Never assume one is always faster; pull both official ETA/timetable sources."
-    summary_zh: "機場往市區：同時考慮機場快線同機場巴士。唔好預設邊種一定快；必須兩邊拉官方 ETA／時間表再比。"
-    summary_en: "Airport to city: consider both Airport Express and airport buses. Never assume one is always faster; pull both official ETA/timetable sources."
-    applies_when: "origin near HKIA or destination CBD / Kowloon / Tsing Yi corridor"
-    never_claim: [fixed_minutes_faster, always_prefer_ael, always_prefer_bus]
     duration_policy: official_eta_or_gtfs_only
-    route_check:
-      status: unverified
-      official_route_ids: []
-      official_stop_ids: []
-      note: "Preference tip — verify each candidate via GTFS/ETA."
-    risk: low
-    disclaimer: "Community tip AS IS; not official ETA. Compare live official sources."
 
   - id: tip-exit-walk-pedroute
-    title: "Verify exits with PedRoute"
-    title_zh: "出口／步行用 PedRoute 覆核"
-    category: shortcut_walk
+    title: "Verify exits and walks with official maps / PedRoute"
+    title_zh: "出口同步行用官方站圖／PedRoute 覆核"
+    category: interchange
     audience: [both]
+    summary: "Station exits and transfer walks: verify with official station layouts or LandsD PedRoute / OSRM walk. Process tip only — no hardcoded exits or minutes."
+    summary_zh: "站出口／轉乘步行：用官方站設施圖或 LandsD PedRoute／OSRM walk 覆核；只提醒流程，唔寫死出口或分鐘。"
     community: true
     unofficial: true
-    as_of: "2026-10-21"
     source: "https://hosting.csdi.gov.hk/csdi-webpage/apidoc/3d-pedestrian-route-search"
-    source_type: official
-    summary: "Station exits / transfer walks: verify with official station maps or LandsD PedRoute / OSRM; process-only tip."
-    summary_zh: "站出口／轉乘步行：用官方站設施圖或 LandsD PedRoute／OSRM 覆核；本 tip 只提醒流程。"
-    summary_en: "Station exits / transfer walks: verify with official station maps or LandsD PedRoute / OSRM; process-only tip."
-    applies_when: "any MTR/bus interchange with outdoor or indoor walk"
-    never_claim: [hardcoded_exit_number, hardcoded_walk_minutes, unofficial_shortcut_as_official]
-    duration_policy: official_eta_or_gtfs_only
+    as_of: "2026-10-21"
+    expires: null
     route_check:
       status: unverified
       official_route_ids: []
       official_stop_ids: []
-      note: "Process tip — no hardcoded exits."
-    risk: low
-    disclaimer: "Community tip AS IS; walk times from PedRoute/OSRM only."
+      note: "Per-station exit numbers must come from MTR station layout PDFs or PedRoute response at query time."
+    risk: medium
+    disclaimer: "Community process tip AS IS; shortcuts may close. Not official ETA."
+    related_sources:
+      - "https://www.mtr.com.hk/en/customer/services/system_map.html"
+    duration_policy: official_eta_or_gtfs_only
 
   - id: tip-gmb-vs-mtr
-    title: "Green minibus vs MTR"
-    title_zh: "綠巴 vs 港鐵"
+    title: "Green minibus has official ETA; red van does not"
+    title_zh: "綠巴有官方 ETA；紅van 無"
     category: mode_choice
-    audience: [both]
+    audience: [local, both]
+    summary: "Green minibuses have fixed routes and official realtime ETA; MTR has Next Train. Both can be candidates; durations from each official ETA. Red minibuses lack citywide official realtime — do not treat like GMB."
+    summary_zh: "綠專線小巴有固定路線同官方實時到站；港鐵有 Next Train。兩者可並列，車程跟各自官方 ETA。紅van 無全市官方實時——唔好當綠巴用。"
     community: true
     unofficial: true
-    as_of: "2026-10-21"
     source: "https://www.td.gov.hk/tc/transport_in_hong_kong/public_transport/minibuses/index.html"
-    source_type: official
+    as_of: "2026-10-21"
+    expires: null
+    route_check:
+      status: unverified
+      official_route_ids: []
+      official_stop_ids: []
+      note: "Resolve GMB/MTR candidates via GTFS + data.etagmb.gov.hk / Next Train at query time."
+    risk: low
+    disclaimer: "Community mode-choice tip AS IS. Not official journey time."
     related_sources:
       - "https://data.gov.hk/en-data/dataset/hk-td-sm_7-real-time-arrival-data-of-gmb"
       - "https://data.gov.hk/en-data/dataset/mtr-data2-nexttrain-data"
-    summary: "GMB has official realtime ETA; MTR has Next Train. Durations from each official ETA. Red vans are not GMB."
-    summary_zh: "綠巴有官方實時到站；港鐵有 Next Train。車程跟各自官方 ETA。紅van 唔好當綠巴。"
-    summary_en: "GMB has official realtime ETA; MTR has Next Train. Durations from each official ETA. Red vans are not GMB."
-    applies_when: "short feeder or hill routes where GMB and MTR both appear in GTFS candidates"
-    never_claim: [red_van_has_official_eta, gmb_always_faster_than_mtr, hardcoded_minutes]
     duration_policy: official_eta_or_gtfs_only
+
+  - id: tip-cross-harbour-preference
+    title: "Cross-harbour: bus or MTR by preference axes"
+    title_zh: "過海：巴士或港鐵——跟偏好維度"
+    category: mode_choice
+    audience: [local, both]
+    summary: "Cross-harbour bus and MTR are both valid. Prefer by fewer transfers / seats / luggage / late night; actual duration from live official ETA or GTFS only."
+    summary_zh: "過海巴士同港鐵都係合法候選。可按少轉／座位／行李／夜班偏好；實際車程只跟官方 ETA 或 GTFS。"
+    community: true
+    unofficial: true
+    source: "https://data.gov.hk/en-data/dataset/hk-td-tis_11-pt-headway-en"
+    as_of: "2026-10-21"
+    expires: null
     route_check:
       status: unverified
       official_route_ids: []
       official_stop_ids: []
-      note: "Mode-choice tip — verify legs via GMB ETA + MTR Next Train."
+      note: "Compare live KMB/Citybus ETA and MTR Next Train for the OD; never hardcode which is faster."
     risk: low
-    disclaimer: "Community tip AS IS; not official ETA."
-
-  - id: tip-cross-harbour-preference
-    title: "Cross-harbour bus vs MTR preference"
-    title_zh: "過海巴士 vs 港鐵偏好"
-    category: mode_choice
-    audience: [both]
-    community: true
-    unofficial: true
-    as_of: "2026-10-21"
-    source: "https://data.gov.hk/en-data/dataset/hk-td-tis_11-pt-headway-en"
-    source_type: official
+    disclaimer: "Community preference tip AS IS. Not official journey time."
     related_sources:
       - "https://data.gov.hk/en-data/dataset/hk-td-tis_21-etakmb"
       - "https://data.gov.hk/en-data/dataset/ctb-eta-transport-realtime-eta"
       - "https://data.gov.hk/en-data/dataset/mtr-data2-nexttrain-data"
-    summary: "Cross-harbour: bus and MTR are both valid. Preference axes OK; duration only from live ETA/GTFS."
-    summary_zh: "過海：巴士同港鐵都係合法候選。可標少轉／座位等偏好；車程必須即時官方 ETA／GTFS。"
-    summary_en: "Cross-harbour: bus and MTR are both valid. Preference axes OK; duration only from live ETA/GTFS."
-    applies_when: "OD crosses Victoria Harbour"
-    never_claim: [bus_always_faster, mtr_always_faster, hardcoded_minutes]
     duration_policy: official_eta_or_gtfs_only
-    route_check:
-      status: unverified
-      official_route_ids: []
-      official_stop_ids: []
-      note: "Preference tip — verify each harbour leg."
-    risk: low
-    disclaimer: "Community tip AS IS; not official ETA."
 
   - id: tip-last-train-check
-    title: "Verify last train officially"
-    title_zh: "尾班必須官方覆核"
+    title: "Last train — verify with GTFS / operator, never hardcode"
+    title_zh: "尾班車——跟 GTFS／營辦覆核，唔硬編碼"
     category: other
     audience: [both]
+    summary: "Late night / last train: verify with TD GTFS and/or operator timetable / Next Train for that day and station. Never hardcode last-train clock times in tips."
+    summary_zh: "夜歸／尾班：用 TD GTFS 同／或營辦時間表／Next Train 覆核該日該站；禁止喺 tip 硬編碼尾班鐘點。"
     community: true
     unofficial: true
-    as_of: "2026-10-21"
     source: "https://data.gov.hk/en-data/dataset/hk-td-tis_11-pt-headway-en"
-    source_type: official
-    related_sources:
-      - "https://data.gov.hk/en-data/dataset/mtr-data2-nexttrain-data"
-      - "https://www.mtr.com.hk/en/customer/services/timetable_index.html"
-    summary: "Late night / last train: verify with TD GTFS and/or operator timetable / Next Train; never hardcode clock times in tips."
-    summary_zh: "夜歸／尾班：用 TD GTFS 同／或營辦時間表／Next Train 覆核；禁止 tip 硬編碼尾班鐘點。"
-    summary_en: "Late night / last train: verify with TD GTFS and/or operator timetable / Next Train; never hardcode clock times in tips."
-    applies_when: "departure after ~22:00 local or user asks about last train"
-    never_claim: [hardcoded_last_train_time, guaranteed_connection]
-    duration_policy: official_eta_or_gtfs_only
+    as_of: "2026-10-21"
+    expires: null
     route_check:
       status: unverified
       official_route_ids: []
       official_stop_ids: []
-      note: "Process tip — last train from GTFS/timetable only."
-    risk: medium
-    disclaimer: "Community tip AS IS; last-train times from official timetable/ETA only."
+      note: "Last departure must be read from current GTFS calendar/stop_times or operator timetable at query time."
+    risk: high
+    disclaimer: "Community process tip AS IS. Missing last train can strand you — verify official sources."
+    related_sources:
+      - "https://data.gov.hk/en-data/dataset/mtr-data2-nexttrain-data"
+    duration_policy: official_eta_or_gtfs_only
 
   - id: tip-ferry-tourist
-    title: "Ferry ETA vs Star Ferry static"
-    title_zh: "渡輪 ETA vs 天星靜態"
+    title: "Ferries: HKKF/Sun Ferry ETA; Star Ferry static only"
+    title_zh: "渡輪：HKKF／新渡輪有 ETA；天星只靜態"
     category: tourist_default
-    audience: [tourist]
+    audience: [tourist, both]
+    summary: "HKKF and Sun Ferry publish DATA.GOV.HK ETA — use those for timing. Star Ferry publishes timetable/fare static data only (no equivalent realtime ETA dataset found this round) — label static, never live ETA."
+    summary_zh: "HKKF／Sun Ferry 有 DATA.GOV.HK ETA——車程跟 ETA。天星只有時間表／車費靜態（今輪未見同等實時 ETA）——標靜態，唔扮實時。"
     community: true
     unofficial: true
-    as_of: "2026-10-21"
     source: "https://data.gov.hk/en-data/dataset/hkkf-hkkfdata-hkkf-eta-data"
-    source_type: official
+    as_of: "2026-10-21"
+    expires: null
+    route_check:
+      status: unverified
+      official_route_ids: []
+      official_stop_ids: []
+      note: "Pick ferry operator dataset per route; Star Ferry = static timetable only."
+    risk: low
+    disclaimer: "Community ferry guidance AS IS. Not official journey time."
     related_sources:
       - "https://data.gov.hk/en-data/dataset/sunferry-eta-eta"
       - "https://data.gov.hk/en-data/dataset/starferry-starferry-ferry-service-timetables-and-fare-tables-of-star-ferry"
-    summary: "HKKF/Sun Ferry: use DATA.GOV.HK ETA. Star Ferry: static timetable/fare only — never claim live ETA."
-    summary_zh: "HKKF／Sun Ferry 跟 DATA.GOV.HK ETA。天星只得時間表／車費靜態——唔扮實時。"
-    summary_en: "HKKF/Sun Ferry: use DATA.GOV.HK ETA. Star Ferry: static timetable/fare only — never claim live ETA."
-    applies_when: "harbour or outlying island ferry OD"
-    never_claim: [star_ferry_realtime_eta, hardcoded_crossing_minutes]
     duration_policy: official_eta_or_gtfs_only
-    route_check:
-      status: unverified
-      official_route_ids: []
-      official_stop_ids: []
-      note: "Ferry policy tip — Star Ferry live ETA not verified."
-    risk: low
-    disclaimer: "Community tip AS IS; Star Ferry = static only unless a live ETA source is later verified."
 
   - id: tip-alias-ifc-hk-station
-    title: "IFC alias → Hong Kong Station area"
-    title_zh: "IFC 別名 → 香港站一帶"
+    title: "IFC landmark → Hong Kong Station (resolve official stop)"
+    title_zh: "IFC 地標 → 香港站（仍要對官方站名）"
     category: tourist_default
-    audience: [tourist]
+    audience: [tourist, both]
+    summary: "ifc mall states it sits atop Hong Kong MTR Station and lists Exit F / E1 access. Treat IFC as a landmark alias — still resolve to official stop name/id; do not invent stop ids."
+    summary_zh: "ifc 官網寫明坐落港鐵香港站之上，並列 Exit F／E1。IFC 只當地標別名——仍要對齊官方站名／stop id，唔發明 id。"
     community: true
     unofficial: true
+    source: "https://ifc.com.hk/en/mall/location/"
     as_of: "2026-10-21"
-    source: "https://www.mtr.com.hk/en/customer/services/system_map.html"
-    source_type: official
-    related_sources:
-      - "https://www.mtr.com.hk/en/customer/services/airport_express_index.html"
-    summary: "Alias: IFC / International Finance Centre often near MTR Hong Kong Station — still resolve to official stop id; never treat alias as stop id."
-    summary_zh: "俗稱「IFC／國際金融中心」常近港鐵香港站——必須再對齊官方站名／stop id；別名唔等於 stop id。"
-    summary_en: "Alias: IFC often near MTR Hong Kong Station — still resolve to official stop id."
-    applies_when: "tourist landmark query mentioning IFC"
-    never_claim: [alias_equals_official_stop_id, hardcoded_walk_minutes]
-    duration_policy: official_eta_or_gtfs_only
+    expires: null
     route_check:
       status: unverified
       official_route_ids: []
       official_stop_ids: []
-      note: "Alias hint only — map via GTFS/MTR system map; risk medium (landmark≠stop)."
+      note: "Alias only. Confirm Hong Kong Station stop id via TD GTFS / MTR; exit letters may change — re-check ifc + MTR layout."
     risk: medium
-    disclaimer: "Community alias AS IS; not an official stop id. Resolve via MTR system map / GTFS."
+    disclaimer: "Community landmark alias AS IS. Exit letters from mall site — verify on site / MTR layout. Not official stop id."
+    related_sources:
+      - "https://www.mtr.com.hk/en/customer/services/aestations_hk.html"
+      - "https://www.mtr.com.hk/en/customer/services/system_map.html"
+    duration_policy: official_eta_or_gtfs_only
 
   - id: tip-red-van-convention-only
-    title: "Red van = tip only, no ETA"
-    title_zh: "紅van 只可 tip，無官方 ETA"
+    title: "Red van — convention tip only, never realtime ETA"
+    title_zh: "紅van——只慣例 tip，唔當實時 ETA"
     category: rmb_habit
-    audience: [both]
+    audience: [local]
+    summary: "TD: red (non-scheduled) minibuses need not have routes/headways/fares TD-approved; no citywide official realtime ETA. Community boarding-point tips only; never invent schedules."
+    summary_zh: "運輸署：紅van 路線／班次／收費毋須審批；無全市官方實時到站。只可作上車點／慣例社群 tip；永遠唔發明班次。"
     community: true
     unofficial: true
-    as_of: "2026-10-21"
     source: "https://www.td.gov.hk/tc/transport_in_hong_kong/public_transport/minibuses/index.html"
-    source_type: official
-    summary: "Red minibuses: no citywide official realtime ETA. Convention tips only; never invent schedules."
-    summary_zh: "紅van：全市無同等官方實時。只可慣例 tip；永遠唔發明班次。"
-    summary_en: "Red minibuses: no citywide official realtime ETA. Convention tips only; never invent schedules."
-    applies_when: "user asks about red minibus / 紅van"
-    never_claim: [realtime_eta, fixed_schedule, td_approved_route, guaranteed_boarding]
-    duration_policy: official_eta_or_gtfs_only
+    as_of: "2026-10-21"
+    expires: null
     route_check:
       status: unverified
       official_route_ids: []
       official_stop_ids: []
-      note: "Permanent ETA gap — annotate only."
+      note: "Permanent gap for citywide red-van ETA; any specific habit line needs its own sourced tip."
     risk: high
-    disclaimer: "Habit tip only. Not live ETA. AS IS."
+    disclaimer: "Community habit tip AS IS; service may vanish. Not official ETA or schedule."
+    duration_policy: official_eta_or_gtfs_only
 
-  - id: tip-verify-hkemobility
-    title: "Verify with HKeMobility"
-    title_zh: "用出行易核對"
+  - id: tip-estate-shuttle-template
+    title: "Estate/mall shuttle — user timetable template only"
+    title_zh: "屋苑／商場接駁——只收用戶時間表模板"
+    category: estate_shuttle
+    audience: [local, both]
+    summary: "TD public-transport catalogue separates franchised buses from other modes; estate/mall free shuttles have no citywide official open ETA. Accept only user/estate timetable fields (route, operator, validity, source URL). Never invent schedules."
+    summary_zh: "運輸署公共交通分類有專營巴等同其他模式；屋苑／商場免費接駁無全市官方公開 ETA。只收用戶／屋苑時間表欄位；Skill 唔發明班次。"
+    community: true
+    unofficial: true
+    source: "https://www.td.gov.hk/en/transport_in_hong_kong/public_transport/index.html"
+    as_of: "2026-10-21"
+    expires: null
+    route_check:
+      status: unverified
+      official_route_ids: []
+      official_stop_ids: []
+      note: "Template only until a specific estate publishes a citable timetable URL."
+    risk: high
+    disclaimer: "Template tip AS IS. No schedule invented. Not official ETA."
+    duration_policy: official_eta_or_gtfs_only
+
+  - id: tip-motion-comfort
+    title: "Motion comfort = preference, not medical advice"
+    title_zh: "易暈偏好＝偏好，非醫囑"
     category: other
     audience: [both]
+    summary: "Prefer fewer sharp turns / rail or steadier seating when user asks. Label non-medical / AS IS. No guarantee against motion sickness; durations still from official ETA."
+    summary_zh: "用戶要求易暈時可啟發式偏好較少急彎／鐵路或較穩座位；標非醫囑／AS IS。唔保證唔暈；車程仍跟官方 ETA。"
     community: true
     unofficial: true
+    source: "https://github.com/Kinfxhk/hk-transit-agent-skill/blob/main/README.md"
     as_of: "2026-10-21"
-    source: "https://www.td.gov.hk/en/public_services/hong_kong_emobility/"
-    source_type: official
-    summary: "Advise verifying realtime arrivals, fares and diversions with TD HKeMobility; Skill is assistive."
-    summary_zh: "建議用運輸署「香港出行易」核對實時到站、車費同改道；Skill 係輔助。"
-    summary_en: "Advise verifying with TD HKeMobility; Skill is assistive."
-    applies_when: "any journey recommendation shown to user"
-    never_claim: [replaces_official_app, guaranteed_accuracy]
-    duration_policy: official_eta_or_gtfs_only
+    expires: null
     route_check:
       status: unverified
       official_route_ids: []
       official_stop_ids: []
-      note: "Process tip."
+      note: "Product policy tip (README Disclaimer / SKILL motion-comfort). No official comfort API."
+    risk: high
+    disclaimer: "Not medical advice. Heuristic preference only. AS IS."
+    related_sources:
+      - "https://github.com/Kinfxhk/hk-transit-agent-skill/blob/main/SKILL.md"
+    duration_policy: official_eta_or_gtfs_only
+
+  - id: tip-verify-hkemobility
+    title: "Verify with official HKeMobility"
+    title_zh: "用官方「香港出行易」核對"
+    category: other
+    audience: [both]
+    summary: "Advise verifying realtime arrivals, fares and diversions with TD HKeMobility. Skill output is assistive — official app/operators prevail."
+    summary_zh: "建議用運輸署 HKeMobility 核對實時到站、車費同改道；本 Skill 輸出係輔助，以官方 App／營辦為準。"
+    community: true
+    unofficial: true
+    source: "https://www.td.gov.hk/en/public_services/hong_kong_emobility/"
+    as_of: "2026-10-21"
+    expires: null
+    route_check:
+      status: verified
+      official_route_ids: []
+      official_stop_ids: []
+      note: "Points to TD official app/service page; no specific PT route ids."
     risk: low
-    disclaimer: "Community tip AS IS; official app/operators prevail."
+    disclaimer: "Community process tip. Skill does not replace HKeMobility."
+    duration_policy: official_eta_or_gtfs_only
 
   - id: tip-fare-octopus-disclaimer
-    title: "Fares / Octopus = estimate"
-    title_zh: "車資／八達通＝估算"
+    title: "Fares — operator prevails; GTFS is estimate"
+    title_zh: "車資以營辦為準；GTFS 只估算"
     category: fare_hint
     audience: [both]
+    summary: "Fares / Octopus concessions follow operator same-day publication. TD GTFS fare files are estimates only. Always label estimate/AS IS."
+    summary_zh: "車資／八達通優惠以營辦當日公布為準；TD GTFS fare 只可估算。必須標估算／AS IS。"
     community: true
     unofficial: true
-    as_of: "2026-10-21"
     source: "https://data.gov.hk/en-data/dataset/hk-td-tis_11-pt-headway-en"
-    source_type: official
+    as_of: "2026-10-21"
+    expires: null
+    route_check:
+      status: unverified
+      official_route_ids: []
+      official_stop_ids: []
+      note: "Fare figures from GTFS must be labelled estimate; confirm with operator or HKeMobility."
+    risk: medium
+    disclaimer: "Fare estimate AS IS. Not a fare guarantee."
     related_sources:
-      - "https://www.td.gov.hk/en/public_services/hong_kong_emobility/"
-    summary: "Fares / Octopus concessions follow operator same-day publication; GTFS fares are estimates only."
-    summary_zh: "車資／八達通優惠以營辦當日公布為準；GTFS fare 只可估算。"
-    summary_en: "Fares / Octopus follow operator same-day publication; GTFS fares are estimates only."
-    applies_when: "any fare or Octopus discount mentioned"
-    never_claim: [exact_fare_guarantee, octopus_promo_without_operator_check]
+      - "https://data.gov.hk/en/terms-and-conditions"
     duration_policy: official_eta_or_gtfs_only
-    route_check:
-      status: unverified
-      official_route_ids: []
-      official_stop_ids: []
-      note: "Fare policy tip."
-    risk: low
-    disclaimer: "Estimate / AS IS; check operator or HKeMobility."
-
-templates:
-  - id: template-rmb-habit
-    title: "Red minibus habit line (template)"
-    title_zh: "紅van 慣例線（模板）"
-    category: rmb_habit
-    community: true
-    unofficial: true
-    summary: "Placeholder for a specific convention boarding point. Never invent waits."
-    summary_zh: "特定慣例上車點模板。禁止發明班次。"
-    source: "REQUIRED"
-    as_of: "REQUIRED"
-    risk: high
-    disclaimer: "Habit tip only. Not live ETA. AS IS."
-    route_check:
-      status: unverified
-      official_route_ids: []
-      official_stop_ids: []
-      note: "RMB has no unified official city-wide ETA."
-  - id: template-estate-shuttle
-    title: "Estate free shuttle (template)"
-    title_zh: "屋苑免費巴（模板）"
-    category: estate_shuttle
-    community: true
-    unofficial: true
-    summary: "Named estate shuttle — require estate notice URL before promoting to tips[]."
-    summary_zh: "具名屋苑巴——有屋苑通告 URL 先可升格入 tips[]。"
-    source: "REQUIRED"
-    as_of: "REQUIRED"
-    risk: high
-    disclaimer: "Estate tip only. Not public franchise schedule. AS IS."
-    route_check:
-      status: unverified
-      official_route_ids: []
-      official_stop_ids: []
-      note: "Usually no public ETA — tip + user timetable only."
