@@ -31,7 +31,9 @@ A Cursor / agent-compatible [`SKILL.md`](./SKILL.md) plus attribution tables and
 
 ## Affiliate / promo hub (Linktree)
 
-Maintainer hub: **https://linktr.ee/kinfx** (wired in [`.github/FUNDING.yml`](./.github/FUNDING.yml)).
+Maintainer hub: https://linktr.ee/kinfx
+
+GitHub Sponsors / FUNDING: see [.github/FUNDING.yml](./.github/FUNDING.yml).
 
 This transit Skill has **no** `affiliates.yaml`. The Linktree page is KINFX’s public hub for maintainer links (some may be affiliate / referral). Using a link or funding **≠ product endorsement** of this Skill or of any third-party service. Links on that page have **no influence on this software** (MIT; no referral logic in the Skill). **Not investment advice.** Do not put payment secrets in the repo.
 
@@ -51,6 +53,8 @@ MIT — see [LICENSE](./LICENSE) and [NOTICE](./NOTICE). Operator datasets remai
 
 - 範圍同缺口：見 [`references/coverage-matrix.md`](./references/coverage-matrix.md)
 - 資料源歸因：見 [`references/data-sources.md`](./references/data-sources.md)
-- 聯盟／優惠總入口：https://linktr.ee/kinfx（見 `FUNDING.yml`；資助／連結 ≠ 產品背書）
+- 聯盟／優惠總入口：https://linktr.ee/kinfx
+- GitHub Sponsors／FUNDING：見 [.github/FUNDING.yml](./.github/FUNDING.yml)。
+- 資助／連結 ≠ 產品背書。
 
 紅巴、多數屋苑免費巴、電車／纜車實時、全市的士空車＝**永久缺口**，只寫明、唔做假。

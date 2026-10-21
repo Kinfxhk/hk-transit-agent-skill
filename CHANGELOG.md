@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.2 — README：Linktree 與 FUNDING 拆兩行
+
+- README（EN＋繁中）：Linktree 與 GitHub Sponsors／FUNDING 分兩行，避免渲染黏連
+
 ## 0.1.1 — FUNDING/README → linktr.ee/kinfx
 
 - `.github/FUNDING.yml`: `custom: ["https://linktr.ee/kinfx"]`；移除 BMC 佔位
