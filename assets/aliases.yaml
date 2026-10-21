@@ -48,3 +48,8 @@ aliases:
     hint: "Star Ferry Pier, Central"
     audience: both
     tag: tourist_default
+
+  - names: ["IFC", "國際金融中心", "International Finance Centre"]
+    hint: "Near MTR Hong Kong Station / International Finance Centre, Central"
+    audience: tourist
+    tag: tourist_default

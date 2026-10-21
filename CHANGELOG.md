@@ -1,12 +1,12 @@
 # Changelog
 
-## Unreleased — V0.1 tips + V1 hooks
+## Unreleased — V0.1 tips content + QA WARN fixes
 
-- Add `references/local-tips.yaml` (canonical tips + RMB/estate templates)
-- SKILL.md: route verification + mandatory `source_url` / `queried_at` per official option
-- Official vs community output layers; tips never supply minutes
-- `assets/aliases.yaml`: airport / border / ferry tourist defaults (hints only)
-- Coverage matrix: V0.1 / V1-A / V1-B rows
+- Seed 12 community tips into `references/local-tips.yaml` (from 開源研究 pack)
+- SKILL: dedicated **覆核路線** section; unify user-facing timestamp as `queried_at` (+ `source_url`)
+- `duration_policy: official_eta_or_gtfs_only`; tips never embed minutes
+- Aliases: IFC / tourist defaults (hints only)
+- RMB / estate: tip rules + empty named templates
 
 ## 0.1.0 — V0 scaffold
 
