@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.1 — FUNDING/README → linktr.ee/kinfx
+
+- `.github/FUNDING.yml`: `custom: ["https://linktr.ee/kinfx"]`；移除 BMC 佔位
+- README：Sponsor／贊助改指向 https://linktr.ee/kinfx；funding hub ≠ product endorsement
+- 披露：頁上部分連結可能為聯盟連結；對本 Skill 軟件無影響
+
 ## Unreleased — V0.1 tips content + QA WARN fixes
 
 - Seed 12 community tips into `references/local-tips.yaml` (from 開源研究 pack)

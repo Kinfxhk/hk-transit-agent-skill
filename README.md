@@ -21,7 +21,7 @@ A Cursor / agent-compatible [`SKILL.md`](./SKILL.md) plus attribution tables and
 | MTR Next Train + Light Rail | Most estate free shuttles |
 | TD GTFS static transfers | Tram / Peak Tram live ETA |
 | Walk assist + coverage matrix + AS IS | City-wide empty taxi map |
-| `.github/FUNDING.yml` → Buy Me a Coffee | Scraping Citymapper / Google |
+| `.github/FUNDING.yml` → https://linktr.ee/kinfx | Scraping Citymapper / Google |
 
 ## Use as a skill
 
@@ -29,15 +29,11 @@ A Cursor / agent-compatible [`SKILL.md`](./SKILL.md) plus attribution tables and
 2. Ask in natural language: e.g. “點樣由觀塘去中環，易暈、少轉。”
 3. The agent should follow `SKILL.md` and cite sources from `references/`.
 
-## Sponsor (Buy Me a Coffee)
+## Affiliate / promo hub (Linktree)
 
-GitHub Sponsors button is wired via [`.github/FUNDING.yml`](./.github/FUNDING.yml).
+Maintainer hub: **https://linktr.ee/kinfx** (wired in [`.github/FUNDING.yml`](./.github/FUNDING.yml)).
 
-1. Create a page on [Buy Me a Coffee](https://www.buymeacoffee.com/) (Hong Kong is listed for Stripe payouts on their Help — re-verify on their site when you sign up).
-2. Replace `YOUR_BMC_USERNAME` in `FUNDING.yml`.
-3. Repo **Settings → General → Features → Sponsorships** → enable.
-
-No PayMe / PayPal required for this path. Do not put payment secrets in the repo.
+This transit Skill has **no** `affiliates.yaml`. The Linktree page is KINFX’s public hub for maintainer links (some may be affiliate / referral). Using a link or funding **≠ product endorsement** of this Skill or of any third-party service. Links on that page have **no influence on this software** (MIT; no referral logic in the Skill). **Not investment advice.** Do not put payment secrets in the repo.
 
 ## Disclaimer
 
@@ -55,6 +51,6 @@ MIT — see [LICENSE](./LICENSE) and [NOTICE](./NOTICE). Operator datasets remai
 
 - 範圍同缺口：見 [`references/coverage-matrix.md`](./references/coverage-matrix.md)
 - 資料源歸因：見 [`references/data-sources.md`](./references/data-sources.md)
-- 贊助：Buy Me a Coffee（改 `FUNDING.yml` 用戶名）
+- 聯盟／優惠總入口：https://linktr.ee/kinfx（見 `FUNDING.yml`；資助／連結 ≠ 產品背書）
 
 紅巴、多數屋苑免費巴、電車／纜車實時、全市的士空車＝**永久缺口**，只寫明、唔做假。
