@@ -1,0 +1,84 @@
+# Community local tips (V0.1 / V1-B). NOT official ETA.
+# QA: every tip MUST have source + as_of + community: true. No source = FAIL.
+# Agents: annotate / reorder legal GTFS+ETA candidates only — never invent routes or minutes.
+# Red van / estate: templates only until a cited source exists; never invent headways.
+
+schema_version: "0.1"
+layer: community
+unofficial: true
+
+# Shared disclaimer for all tips
+default_disclaimer: >
+  Community tip AS IS; not an official schedule or ETA. Verify on site / HKeMobility.
+  Do not use tip text as journey duration.
+
+tips: []
+# Research will append 8–12 sourced tips. Example shape (do not use as real tip):
+# - id: tip-example
+#   title: "…"
+#   title_zh: "…"
+#   category: interchange  # interchange|shortcut_walk|mode_choice|tourist_default|fare_hint|rmb_habit|estate_shuttle|other
+#   audience: [both]       # tourist|local|both
+#   summary: "Annotate only — no minute claims."
+#   summary_zh: "只註解偏好／捷徑，唔寫死分鐘。"
+#   community: true
+#   unofficial: true
+#   verify_on_site: true
+#   source: "https://…"   # required
+#   as_of: "2026-10-21"   # required YYYY-MM-DD
+#   expires: null
+#   route_check:
+#     status: verified | unverified   # verified = matched official route/stop id
+#     official_route_ids: []          # from GTFS / operator open data when known
+#     official_stop_ids: []
+#     stop_id_source: ""              # URL or "TD GTFS" etc.; required if ids listed
+#     note: ""                        # if unverified, say why
+#   applies_to:
+#     from: ""
+#     to: ""
+#     modes: []
+#     stations: []
+#   risk: low
+#   disclaimer: "Community tip AS IS; may be outdated. Not official ETA."
+
+# --- Templates only (no invented schedules) ---
+templates:
+  - id: template-rmb-habit
+    category: rmb_habit
+    title: "Red minibus habit line (template)"
+    title_zh: "紅van 慣例線（模板）"
+    community: true
+    unofficial: true
+    summary: >
+      Placeholder only. Fill source + as_of + route_check before publishing.
+      Never invent wait times or claim guaranteed service.
+    summary_zh: "僅模板。上庫前必須有來源／日期／路線覆核。禁止發明班次或保證有車。"
+    source: "REQUIRED"
+    as_of: "REQUIRED"
+    route_check:
+      status: unverified
+      official_route_ids: []
+      official_stop_ids: []
+      note: "RMB has no unified official city-wide ETA — tip annotate only."
+    risk: high
+    disclaimer: "Habit tip only. Not live ETA. AS IS."
+
+  - id: template-estate-shuttle
+    category: estate_shuttle
+    title: "Estate free shuttle (template)"
+    title_zh: "屋苑免費巴（模板）"
+    community: true
+    unofficial: true
+    summary: >
+      Placeholder only. Prefer user-supplied timetable or estate notice URL.
+      Never invent schedules.
+    summary_zh: "僅模板。優先用戶提供時間表或屋苑通告 URL。禁止發明班次。"
+    source: "REQUIRED"
+    as_of: "REQUIRED"
+    route_check:
+      status: unverified
+      official_route_ids: []
+      official_stop_ids: []
+      note: "Usually no public ETA — tip + user timetable only."
+    risk: high
+    disclaimer: "Estate tip only. Not public franchise schedule. AS IS."

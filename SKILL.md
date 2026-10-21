@@ -6,74 +6,85 @@ description: >
   with cited sources. Use when the user asks how to go somewhere in Hong Kong by
   MTR, Light Rail, franchised bus, green minibus, ferry piers, airport/border
   defaults, or related open-data modes. Do not use for medical advice about
-  motion sickness. Never present community tips as live ETA.
+  motion sickness. Never present community tips as live ETA or journey duration.
 ---
 
-# Hong Kong transit (V0 + V0.5 tips)
+# Hong Kong transit (V0 + V0.1 tips + V1-A/B hooks)
 
 ## Hard rules
 
-1. **Official open data only for ETA / routes.** Fetch DATA.GOV.HK / operator-published ETA and TD GTFS. **Never scrape** Citymapper, Google Maps HTML, or closed operator apps.
-2. **Two output layers — never mix.**
+1. **Official open data only for ETA / journey times.** Fetch DATA.GOV.HK / operator-published ETA and TD GTFS (`stop_times` / schedules). **Never scrape** Citymapper, Google Maps HTML, or closed operator apps.
+2. **Every official option must include:**
+   - **Route verification:** each leg aligned to official route / stop sequence (GTFS or operator open data), **or** explicitly labelled `未能核實` / `unverified`.
+   - **Journey-time source:** operator or DATA.GOV.HK URL **plus** `queried_at` (ISO-8601, Asia/Hong_Kong). No URL + `queried_at` = incomplete — do not present as verified.
+3. **Two output layers — never mix.**
    - **Official:** ETA, GTFS legs, PedRoute/OSRM walk, official fare tables.
-   - **Community tip:** files under `tips/` (`community: true`). Always label as tip; never invent waits from tips.
-3. **No sourceless tips.** Reject any tip missing `source` or `as_of`. See `tips/SCHEMA.md`.
-4. **No secrets in this skill.** Keyless public endpoints only in V0; any future key stays in environment variables.
-5. **No operator logos** as branding. Attribute text sources; do not impersonate HKeMobility or operators.
-6. **AS IS.** Times and routes are planning aids. Live conditions, diversions, and typhoon suspensions override this skill — tell the user to check the operator / HKeMobility when unsure.
-7. **Motion comfort is preference, not medical advice.** Heuristics in `references/motion-comfort-heuristics.yaml` are community tags only.
-8. **Honest coverage.** If a mode has no official ETA (red minibus, most estate free shuttles, tram real-time, Peak Tram real-time, city-wide taxi vacancy), say so — do not fabricate. RMB / estate habits may appear only as **tips** with source + date.
+   - **Community tip:** `references/local-tips.yaml` (and optional `tips/examples/`). Annotate / reorder only; **never** supply minutes or waits from tips.
+4. **No sourceless tips.** Reject any tip missing `source`, `as_of`, or `community: true`. See `tips/SCHEMA.md` and `references/local-tips.yaml`.
+5. **No secrets in this skill.** Keyless public endpoints only in V0; any future key stays in environment variables.
+6. **No operator logos** as branding. Attribute text sources; do not impersonate HKeMobility or operators.
+7. **AS IS.** Times and routes are planning aids. Live conditions, diversions, and typhoon suspensions override this skill.
+8. **Motion comfort is preference, not medical advice.** Heuristics in `references/motion-comfort-heuristics.yaml` are community tags only.
+9. **Honest coverage.** Red minibus / estate shuttles: **templates only** in `local-tips.yaml` until a cited source exists — never invent headways. Tram / Peak Tram live ETA and city-wide taxi vacancy remain gaps.
 
 ## V0 in scope (unchanged)
 
 - ETA: KMB / LWB, Citybus V2 (CTB), Green Minibus (GMB), MTR Next Train, Light Rail
-- Static transfer candidates: Transport Department GTFS headway / routes / stops / fares
-- Walking: LandsD 3D Pedestrian Route Search **or** OSRM walk (OSM); landmark names from OSM / user hints
-- Output always includes: source URLs, data timestamps (`opened_at` / `generated_timestamp`), coverage gaps, AS IS disclaimer
+- Static transfer candidates: Transport Department GTFS
+- Walking: LandsD PedRoute **or** OSRM walk
 
-## V0.5 add-ons
+## V0.1 / V1-B (tips)
 
-- Tourist / local bilingual place aliases in `assets/aliases.yaml` (hints only — **do not** overwrite official stop ids)
-- Airport / border crossings / ferry pier default place hints
-- Fare / Octopus reminders only when citing an official fare page (or a tip with `category: fare_hint` + source)
-- Community tips layer: `tips/` (schema + examples)
+- Canonical tips: `references/local-tips.yaml`
+- Schema: `tips/SCHEMA.md` (`route_check`, `unofficial`, etc.)
+- Tourist / local bilingual aliases: `assets/aliases.yaml` (search hints only — **do not** overwrite official stop ids)
+
+## V1-A (data thicken — scripts may land in follow-up commits)
+
+- NLB, MTR bus, ferry ETA where official; tram / Star Ferry / Peak Tram **static** only until live ETA is verified on an official page
 
 ## Out of scope
 
-- Promising 100% red-van / estate-shuttle coverage
-- Guaranteeing “fastest arrival” or turn-by-turn legal navigation liability
+- 100% red-van / estate-shuttle coverage or invented schedules
+- Guaranteeing “fastest arrival” or navigation liability
 - Medical advice for motion sickness
 
 ## Workflow
 
-1. Clarify origin, destination (place name or coordinates), departure time, and preferences: fastest / fewest transfers / less walking / motion-comfort / accessibility / tourist vs local.
-2. Resolve places via `assets/aliases.yaml` **as search hints only**. Prefer official stop/station ids from GTFS / operator open data when known. Never replace an official id with an alias string.
-3. Build candidate itineraries from TD GTFS (or a local cache). Do not claim a single official “PT journey planner API” unless one is later verified on an official page.
-4. For each transit leg, call the matching ETA script or HTTPS endpoint (see `references/data-sources.md`). Respect HTTP 429 with backoff.
-5. For walking legs, call PedRoute (zh-HK directions if available) or OSRM walk. Summarise road names and key landmarks.
-6. Optionally load matching tips from `tips/examples/*.yaml` (skip `_template.yaml`). Match by `applies_to` / keywords. Drop tips past `expires` or missing `source`/`as_of`.
-7. If the user is motion-sensitive, down-rank routes tagged in `motion-comfort-heuristics.yaml` and explain the trade-off (heuristic + disclaimer).
-8. **Reply structure (required):**
-   - **Official options:** modes, waits (if ETA), walk summary, fare estimate if GTFS fare exists (label as estimate), sources + timestamps, gaps.
-   - **Community tips (if any):** bullet each tip with `title`, `as_of`, `source`, and `disclaimer`. Never fold tip text into ETA lines.
-9. For estate bus / RMB / missing ETA: ask the user for a timetable, or point them to HKeMobility / the operator — never invent schedules. Tip files with `rmb_habit` / `estate_shuttle` may be shown only as habits.
+1. Clarify origin, destination, departure time, preferences (tourist vs local, motion-comfort, etc.).
+2. Resolve places via `assets/aliases.yaml` **as search hints only**. Prefer official stop/station ids from GTFS / operator open data. Never replace an official id with an alias string.
+3. Build candidate itineraries from TD GTFS (or local cache).
+4. **Route verification (required):** for each leg, confirm route id + stop sequence against GTFS / operator open data. If not confirmed, mark that leg `未能核實` and say what is missing.
+5. For each transit leg, call the matching ETA endpoint (see `references/data-sources.md`). Record **source URL** and **`queried_at`**. Respect HTTP 429 with backoff. Journey minutes come **only** from ETA or GTFS schedule — never from tips.
+6. For walking legs, call PedRoute or OSRM walk; cite the routing source + `queried_at`.
+7. Optionally load tips from `references/local-tips.yaml` (`tips` array; skip `templates` until filled with real `source`/`as_of`). Drop tips missing required fields; WARN if `as_of` older than 90 days.
+8. Motion-sensitive users: down-rank heuristic-tagged routes with disclaimer.
+9. **Reply structure (required):**
+   - **Official options** — for each option / leg:
+     - modes, verified route/stop ids (or `未能核實`)
+     - waits / durations from ETA or GTFS only
+     - `source_url` + `queried_at`
+     - fare estimate if GTFS fare exists (label as estimate)
+     - gaps
+   - **Community tips (if any)** — separate section: `title`, `as_of`, `source`, `route_check.status`, `disclaimer`. Never fold into ETA lines.
+10. Estate / RMB: ask for user timetable or cite tip habit only — never invent schedules.
 
-## How to use `tips/`
+## How to use `references/local-tips.yaml`
 
-1. Read `tips/SCHEMA.md` before adding or citing a tip.
-2. Load YAML tips; require `community: true`, non-empty `source`, valid `as_of`.
-3. Prefer tips whose `audience` matches the user (`tourist` / `local` / `both`).
-4. Surface high-`risk` tips with extra caution (e.g. informal RMB).
-5. Update `references/coverage-matrix.md` when tip categories expand coverage *documentation* — tips do not change ETA “In” status.
+1. Read `tips/SCHEMA.md`.
+2. Load `tips:`; require `community: true`, `unofficial: true`, non-empty `source`, valid `as_of`, and `route_check`.
+3. Prefer tips matching `audience` (`tourist` / `local` / `both`).
+4. Use tips only to annotate or reorder **already legal** official candidates.
+5. High-`risk` (e.g. `rmb_habit`) → extra caution. `templates` are not publishable tips until sourced.
 
-## Attribution sentence (include when using DATA.GOV.HK data)
+## Attribution
 
 > Data from [DATA.GOV.HK](https://data.gov.hk/) and the respective operators / Transport Department. Provided AS IS; not affiliated with the Government of the HKSAR or the operators.
 
-When citing tips, add:
+When citing tips:
 
-> Community tip(s) from this skill’s `tips/` files; not official schedules. Check sources dated `as_of`.
+> Community tip(s) from `references/local-tips.yaml`; not official schedules. Check `source` dated `as_of`.
 
 ## Scripts
 
-Optional helpers under `scripts/` (thin HTTPS clients). Prefer calling official URLs directly if scripts are missing. Do not vendor GPL libraries into this MIT tree.
+Optional helpers under `scripts/`. Do not vendor GPL libraries into this MIT tree.

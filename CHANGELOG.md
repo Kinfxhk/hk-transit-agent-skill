@@ -1,11 +1,12 @@
 # Changelog
 
-## Unreleased — V0.5 tips scaffold
+## Unreleased — V0.1 tips + V1 hooks
 
-- Add `tips/` schema, README, example template
-- SKILL.md: official vs community output layers; tip usage rules
+- Add `references/local-tips.yaml` (canonical tips + RMB/estate templates)
+- SKILL.md: route verification + mandatory `source_url` / `queried_at` per official option
+- Official vs community output layers; tips never supply minutes
 - `assets/aliases.yaml`: airport / border / ferry tourist defaults (hints only)
-- `references/coverage-matrix.md`: tips / V0.5 rows
+- Coverage matrix: V0.1 / V1-A / V1-B rows
 
 ## 0.1.0 — V0 scaffold
 

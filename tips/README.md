@@ -1,9 +1,7 @@
 # Community tips layer
 
-Local “private transfer” knowledge lives here: exits, shortcuts, tourist defaults, informal habits.
+**Canonical file:** [`../references/local-tips.yaml`](../references/local-tips.yaml) (`tips: []` + required fields).
 
-- **Schema:** [SCHEMA.md](./SCHEMA.md)
-- **QA:** every tip needs `source` + `as_of` + `community: true`. No source = reject.
-- **Agent output:** always separate **Official** (ETA/GTFS) vs **Community tip** sections.
-
-Research may add verified examples; engineering owns schema and `SKILL.md` usage rules.
+- Schema detail: [SCHEMA.md](./SCHEMA.md) (aligns with `local-tips.yaml`)
+- Per-file examples (optional): `examples/` — must still satisfy `source` / `as_of` / `community`
+- QA: no source = FAIL; tips never supply official journey minutes
