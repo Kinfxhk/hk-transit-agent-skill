@@ -1,0 +1,18 @@
+# Community motion-comfort tags — NOT medical advice.
+# Prefer avoiding or warning when the user says they get motion sick.
+version: 1
+disclaimer: Personal comfort preferences only. Not medical advice.
+rules:
+  - id: prefer-rail
+    when: user_prefers_low_motion
+    action: prefer_modes
+    modes: [mtr, light_rail]
+  - id: warn-ferry-wind
+    tags: [ferry, open_water]
+    action: warn
+    note: Ferry legs can feel rough in wind; offer rail/bus alternatives when possible.
+  - id: warn-winding-nt
+    tags: [winding_hill, long_tunnel_bus]
+    action: prefer_avoid
+    note: Winding New Territories bus routes / long tunnels may feel worse for some riders.
+# Contributors: add route_id or stop tags with source notes; never claim clinical accuracy.

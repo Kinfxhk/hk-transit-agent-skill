@@ -1,0 +1,10 @@
+hk-transit-agent-skill
+Copyright (c) 2026 KINFX / Kinfxhk
+
+Licensed under the MIT License. See LICENSE.
+
+Transit ETA and schedule data remain the intellectual property of the
+Government of the HKSAR, Transport Department, and respective operators
+(e.g. KMB, Citybus, MTR, GMB operators). This project only documents how
+to fetch publicly published endpoints and attributes sources; it does not
+claim ownership of operator trademarks or raw datasets.

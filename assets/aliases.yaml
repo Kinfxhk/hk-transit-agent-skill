@@ -1,0 +1,7 @@
+# Place-name aliases (Cantonese / colloquial → search hint). Community-maintained.
+# Keep small in V0; do not invent coordinates without a source.
+aliases:
+  - names: ["波鞋街", "Fa Yuen Street sneakers"]
+    hint: "Fa Yuen Street, Mong Kok"
+  - names: ["鐘樓", "Tsim Sha Tsui Clock Tower"]
+    hint: "Former Kowloon-Canton Railway Clock Tower, Tsim Sha Tsui"
